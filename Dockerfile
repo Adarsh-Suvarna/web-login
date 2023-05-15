@@ -1,18 +1,14 @@
-FROM ubuntu
+FROM alpine:3.7
 
 MAINTAINER adarshasuvarna
 
 WORKDIR /usr/apps/hello-docker/
 
-RUN apt-get -y update \
-    && apt-get install -y nodejs \ 
-    && RUN apt-get install -y npm \
-    && RUN npm install -g http-server
+RUN apk add --update bash
+RUN apk add nodejs
+RUN apk add --update nodejs nodejs-npm
+RUN npm install -g http-server
 
-ADD . .
-
-EXPOSE 8080
-
-# ADD index.html /usr/apps/hello-docker/index.html
+ADD . /usr/apps/hello-docker/
 
 CMD ["http-server", "-s"]
