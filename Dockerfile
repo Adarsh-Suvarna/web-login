@@ -1,21 +1,18 @@
-FROM ubuntu:latest
+FROM ubuntu
 
-MAINTAINER ybmsr <ybmadhu404@gmail.com>
+MAINTAINER adarshasuvarna
 
 WORKDIR /usr/apps/hello-docker/
 
-RUN apt-get -y update
+RUN apt-get -y update \
+    && apt-get install -y nodejs \ 
+    && RUN apt-get install -y npm \
+    && RUN npm install -g http-server
 
-RUN apt-get install -y nodejs
+ADD . .
 
-RUN apt-get install -y npm
+EXPOSE 8080
 
-#RUN ln -s /usr/bin/nodejs /usr/bin/node........;;;;;
-
-RUN npm install -g http-server
-
-ADD . /usr/apps/hello-docker/
-
-ADD index.html /usr/apps/hello-docker/index.html
+# ADD index.html /usr/apps/hello-docker/index.html
 
 CMD ["http-server", "-s"]
